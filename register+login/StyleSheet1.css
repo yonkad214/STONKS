@@ -1,0 +1,91 @@
+﻿body {
+}
+.button {
+    border: inherit;
+    background-color: inherit;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+    .button:hover {
+        background: #eee;
+    }
+.register {
+    border: 2px solid red;
+    color: white;
+    background: red;
+}
+    .register:hover{
+        color: red;
+        border: 2px solid red;
+        background: white;
+    }
+.login {
+    color: red;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+    .error{
+        float: left;
+        color: red;
+    }
+
+.input {
+    border: 2px red solid;
+    background-color: red;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display:inline-block;
+    border-radius: 5px;
+    margin-right: 44%;
+    margin-top: 2%;
+}
+    .input:hover {
+        color: red;
+        border: 2px solid red;
+        background: white;
+    }
+.inputinfo {
+    float: right;
+    border: hidden;
+    background-color: inherit;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 5px;
+}
+    .inputinfo:hover {
+        color: red;
+        border: 2px solid red;
+        background: white;
+    }
+.tables  {
+    margin-top:2%;
+    margin-right:38%;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: lightgray;
+}
+
+.error {
+
+    color: blue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    direction:rtl;
+    float:right;
+}
+
+.header, h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: underline;
+}
+/*form{
+    background-color: lightgray;
+    
+}*/
+
+

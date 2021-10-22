@@ -1,0 +1,81 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Page.master.cs" Inherits="register_login.Page" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <link href="StyleSheet1.css" rel="stylesheet" />
+    <%-- icons buttons libreary --%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <title>אתר המשחקים לבידוד</title>
+    <style>
+        .chooseGame {
+            position:relative;
+            float:left;
+    background-color: #FFF;
+    vertical-align:top;
+}
+
+    .chooseGame a {
+        
+        float: left;
+        display: block;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        color: #ff0000;
+        font-family: Arial;
+        font-size: 16px;
+    }
+
+        .chooseGame a:hover {
+            background-color: #eee;
+        }
+
+    .btn {
+      background-color: white; 
+      border: none; 
+      color: red;
+      padding: 10px 14px; 
+      font-size: 16px; 
+      cursor: pointer; 
+    }
+
+    .btn:hover {
+      background-color: red;
+      color:  white;
+    }
+
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="direction:rtl">
+    <%=button0 %>
+    <%=button1 %>
+    
+    <%=tableList %>
+    <%=button2 %>
+    <button class="btn" onclick="window.location.href = 'home.aspx'"><i class="fa fa-home"></i></button>
+
+
+    <script type="text/javascript">
+        function logOut(){
+            var bool;
+            if (confirm("אתה בטוח שתרצה להתנתק מהאתר?")) {
+                bool = true;
+            } else {
+                bool = false;
+            }
+            return bool;
+        }
+
+    </script>
+    
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</body>
+</html>

@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style>
+        body {
+            margin: 0;
+        }
+        @font-face {
+        font-family: "Gameplay";
+        src: url('assets/Minecraft.ttf');
+      }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        var config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 512,
+            
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    x: 30,
+                    y: 40,
+                    width: 740,
+                    height: 440,
+                    fps: 60,
+                    debug: false,
+                },
+            },
+        };
+        //movment speed
+        const MOVMENT_SPEED = 5;
+        const SLIME_SPEED = 50;
+        const ZOMBIE_SPEED = 40;
+
+        var knight;
+        var hearts;
+        //enemies
+        var slimes;
+        var zombies;
+        var difficulty = 10;
+        //sword
+        var sword;
+        var swordOn = false;
+        var swordDelay = true;
+        const SWORD_HEIGHT = 48;
+        const SWORD_WIDTH = 20;
+
+        const tilemap = [["wall_side_top_left","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","fountain_top","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_side_top_right"],
+            ["wall_side_mid_left","wall_mid","wall_mid","wall_mid","banner","wall_mid","wall_mid","wall_goo","wall_mid","wall_mid","wall_mid","wall_mid","fountain_mid_blue","wall_mid","wall_mid","wall_hole","wall_mid","wall_mid","wall_mid","banner","wall_mid","wall_mid","wall_mid","wall_mid","wall_side_mid_right"],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            ["wall_side_top_left","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_top_mid","wall_side_top_right"]];
+
+        var gameScene = new Phaser.Scene("game");
+        var titleScene = new Phaser.Scene("title");
+
+        
+
+        var gameState = {
+            knight: {},
+            cursors: {},
+            angle: 0,
+            hp: 6,
+            score: 0,
+            round: 1,
+            slimes: 0,
+            zombies: 0,
+        };
+        gameScene.init = function () {
+
+        };
+        gameScene.preload = function() {
+            this.load.image('tileset', 'assets/dungeon1.png');
+            this.load.image('knight', 'assets/knight.png');
+            this.load.image('knightIdle', 'assets/knight_idle2.png');
+            this.load.image('sword', 'assets/sword2.png');
+            this.load.image('slime', 'assets/slime_monster2.png');
+            this.load.image('heart_full', 'assets/heart_full.png');
+            this.load.image('heart_half', 'assets/heart_half.png');
+            this.load.image('heart_empty', 'assets/heart_empty.png');
+            this.load.image('zombie', 'assets/zombie.png');
+            this.load.image('f1', 'assets/floor_1.png');
+            this.load.image('f2', 'assets/floor_2.png');
+            this.load.image('f3', 'assets/floor_3.png');
+            this.load.image('f4', 'assets/floor_4.png');
+            this.load.image('f5', 'assets/floor_5.png');
+            this.load.image('f6', 'assets/floor_6.png');
+            this.load.image('f7', 'assets/floor_7.png');
+            this.load.image('f8', 'assets/floor_8.png');
+            this.load.image("fountain_base_blue", 'assets/fountain_base_blue.png');
+            this.load.image("fountain_mid_blue", 'assets/fountain_mid_blue.png');
+            this.load.image("banner", 'assets/wall_banner.png');
+            this.load.image("fountain_top", 'assets/fountain_top.png');
+            this.load.image("wall_mid", 'assets/wall_mid.png');
+            this.load.image("wall_top_mid", 'assets/wall_top_mid.png');
+            this.load.image("wall_side_mid_right", 'assets/wall_side_mid_right.png');
+            this.load.image("wall_side_mid_left", 'assets/wall_side_mid_left.png');
+            this.load.image("wall_side_top_left", 'assets/wall_side_top_left.png');
+            this.load.image("wall_side_top_right", 'assets/wall_side_top_right.png');
+            this.load.image("wall_goo", 'assets/wall_goo.png');
+            this.load.image("wall_goo_base", 'assets/wall_goo_base.png');
+            this.load.image("wall_hole", 'assets/wall_hole.png');
+
+        };
+
+        gameScene.create = function() {
+            //create background
+            for (var i = 0; i < 15; i++) {
+                    for (var j = 0; j < 25; j++) {
+                        if (i > 1) {
+                            if (j == 0) {
+                                gameScene.add.image(16 + 32 * j, 16 + 32 * i, "wall_side_mid_left");
+                            }
+                            else if (j == 24) {
+                                this.add.image(16 + 32 * j, 16 + 32 * i, "wall_side_mid_right");
+                            }
+                            else {
+                            
+                                this.add.image(16 + 32 * j, 16 + 32 * i, "f"+rng(1,8));
+                            }
+                        }
+
+                        else {
+                            this.add.image(16 + 32 * j, 16 + 32 * i, tilemap[i][j])
+
+                        }
+                    }
+                }
+            
+            
+        
+            //scene.physics.world.bounds.setTo(16,16,784,496);
+            sword = this.physics.add.sprite(1000, 1000, 'sword');
+
+            //create knight
+            knight = this.physics.add.sprite(300, 400, "knightIdle");   
+            knight.setCollideWorldBounds(true);
+
+            
+            gameState.cursors = this.input.keyboard.createCursorKeys();//recieves cursors input
+            this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+            
+            slimes = this.physics.add.group();
+            summonSlimes(10);
+            zombies = this.physics.add.group();
+            summonZombies(4);
+            //add score
+            gameState.scoreText = this.add.text(24, 3, 'Score: 0', { fontSize: '20px', fill: '#ffffff' })
+            //add hearts
+            hearts = this.physics.add.staticGroup();
+            var heart1 = hearts.create(config.width-45*3,30,'heart_full');
+            var heart2 = hearts.create(config.width-45*2,30,'heart_full');
+            var heart3 = hearts.create(config.width-45,30,'heart_full');
+
+            //colliders for slimes
+            this.physics.add.overlap(sword, slimes, function (sword, slime) {
+                slime.destroy();
+                gameState.slimes -= 1;
+                gameState.score += 75;
+                gameState.scoreText.setText(`Score: ${gameState.score}`)
+            });
+            this.physics.add.overlap(knight, slimes, function (knight, slime) {
+                slime.destroy();
+                gameState.slimes -= 1;
+                gameState.hp -= 1;
+                calcHp();
+            }, null, this);
+            
+
+            //colliders for zombies
+            this.physics.add.collider(sword, zombies, function (sword, zombie) {
+                zombie.destroy();
+                gameState.zombies -= 1;
+                gameState.score += 100;
+                gameState.scoreText.setText(`Score: ${gameState.score}`)
+            });
+            this.physics.add.overlap(knight, zombies, function (knight, zombie) {
+                zombie.destroy();
+                gameState.zombies -= 1;
+                gameState.hp -= 1;
+                calcHp();
+            }, null, this);
+            this.physics.add.collider(zombies, zombies);
+
+            
+
+            sword.body.x = sword.x - SWORD_WIDTH / 2
+            sword.body.y = sword.y - SWORD_HEIGHT / 2;
+            sword.body.width = SWORD_WIDTH;
+            sword.body.height = SWORD_HEIGHT;
+            
+            //bottom of background
+            for (var i = 0; i < 25; i++) {
+                var temp_img = this.add.image(16 + 32 * i, 16 + 32 * 15, tilemap[15][i]);
+                temp_img.flipY = true;
+            }
+        };
+
+        gameScene.update = function() {
+            playerInputs();
+            if (Phaser.Input.Keyboard.JustDown(this.spacebar) && !swordOn) {
+                swordSwing();
+            }
+            moveZombies();
+            rounds();
+        };
+
+        var game = new Phaser.Game(config);
+
+        game.scene.add('titleScene', titleScene);
+        game.scene.add("game", gameScene);
+
+        game.scene.start('gameScene');
+
+        function render() {
+
+        };
+        function swordSwing() {
+            
+            sword.angle = gameState.angle;
+            sword.x = knight.x;
+            sword.y = knight.y;
+            swordOn = true;
+            
+            setTimeout(function () {
+                swordOn = false;
+                sword.x = 1000;
+                sword.y = 1000;
+            }, 500);
+
+            
+        };
+        function calcXYsword() {
+            sword.angle = gameState.angle;
+            switch (gameState.angle) {
+                case 0: // up
+                    sword.y = knight.y - 20;
+                    sword.x = knight.x;
+                    sword.body.x = sword.x - SWORD_WIDTH/2;
+                    sword.body.y = sword.y-SWORD_HEIGHT/2;
+                    sword.body.width = SWORD_WIDTH;
+                    sword.body.height = SWORD_HEIGHT;
+                    break;
+                case 90: // right
+                    sword.y = knight.y + 5;
+                    sword.x = knight.x + 20;
+                    sword.body.x = sword.x-SWORD_HEIGHT/2;
+                    sword.body.y = sword.y-SWORD_WIDTH/2;
+                    sword.body.width = SWORD_HEIGHT;
+                    sword.body.height = SWORD_WIDTH;
+                    break;
+                case 180: //down
+                    sword.y = knight.y + 30;
+                    sword.x = knight.x;
+                    sword.body.x = sword.x - SWORD_WIDTH/2;
+                    sword.body.y = sword.y-SWORD_HEIGHT/2;
+                    sword.body.width = SWORD_WIDTH;
+                    sword.body.height = SWORD_HEIGHT;
+                    break;
+                case 270: //left
+                    sword.y = knight.y + 5;
+                    sword.x = knight.x - 20;
+                    sword.body.x = sword.x - SWORD_HEIGHT/2;
+                    sword.body.y = sword.y - SWORD_WIDTH/2;
+                    sword.body.width = SWORD_HEIGHT;
+                    sword.body.height = SWORD_WIDTH;
+                    break;
+                
+
+                
+            }
+        };
+        function summonSlimes(numOfSlimes) {
+            for (var i = 0; i < numOfSlimes; i++) {
+                slimes.create(rng(0,config.width), rng(0,rng(0,config.height)), 'slime').setVelocityX(SLIME_SPEED * (-1)**(i+1)).setVelocityY(SLIME_SPEED * (-1)**(i+1)).setCollideWorldBounds(true).setBounce(1);
+            }
+            gameState.slimes += numOfSlimes;
+        };
+        function summonZombies(numOfZombies) {
+            for (var i = 0; i < numOfZombies; i++) {
+                zombies.create(rng(0,config.width), rng(0,rng(0,config.height)), 'zombie').setCollideWorldBounds(true);
+                
+            };
+            gameState.zombies += numOfZombies;
+        };
+        function rng(min, max) { 
+            return Math.floor((Math.random() * max) + min);
+        }; // random number generator
+        function calcHp() {
+            switch (gameState.hp) {
+                case 5:
+                    hearts.create(config.width - 45, 30, 'heart_half');
+                    break;
+                case 4:
+                    hearts.create(config.width - 45, 30, 'heart_empty');
+                    break;
+                case 3:
+                    hearts.create(config.width - 45*2, 30, 'heart_half');
+                    break;
+                case 2:
+                    hearts.create(config.width - 45*2, 30, 'heart_empty');
+                    break;
+                case 1:
+                    hearts.create(config.width - 45*3, 30, 'heart_half');
+                    break;
+                case 0:
+                    hearts.create(config.width - 45 * 3, 30, 'heart_empty');
+                    lose();
+                    break;
+            };
+        };
+
+        function moveZombies() {
+            zombies.children.iterate(function (zombie) {
+                if (knight.x - 5 > zombie.x) {
+                    zombie.setVelocityX(ZOMBIE_SPEED);
+                }
+                else if (knight.x + 5 < zombie.x) {
+                    zombie.setVelocityX(-ZOMBIE_SPEED);
+                }
+                else { zombie.setVelocityX(0); };
+
+                if (knight.y - 5 > zombie.y) {
+                    zombie.setVelocityY(ZOMBIE_SPEED);
+                }
+                else if (knight.y < zombie.y) {
+                    zombie.setVelocityY(-ZOMBIE_SPEED);
+                }
+                else { zombie.setVelocityY(0); };
+            });
+        };
+        function playerInputs() {
+                        if (gameState.cursors.left.isDown)
+            {
+                knight.x -= MOVMENT_SPEED;
+                gameState.angle = 270;
+                knight.flipX = true;
+            }
+            else if (gameState.cursors.right.isDown)
+            {
+                knight.x += MOVMENT_SPEED;
+                gameState.angle = 90;
+                knight.flipX = false;
+            }
+            else if (gameState.cursors.up.isDown)
+            {
+                knight.y -= MOVMENT_SPEED;
+                gameState.angle = 0;
+            }
+            else if (gameState.cursors.down.isDown)
+            {
+                knight.y += MOVMENT_SPEED;
+                gameState.angle = 180;
+            }
+            
+            if (swordOn) {
+                calcXYsword();
+            }
+        };
+        function rounds() {
+            if (gameState.zombies == 0 && gameState.slimes == 0) {
+
+            }
+        };
+        
+    </script>
+</body>
+</html>

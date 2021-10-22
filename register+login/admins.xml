@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<admins>
+  <adminUser>
+    <username>YONKAD214</username>
+    <password>YONkad214</password>
+    <firstName>יונתן</firstName>
+    <lastName>קדים</lastName>
+    <email>yonkad214214@gmail.com</email>
+    <phone>0547337329</phone>
+    <address>אלוף דוד 90</address>
+    <Gender>זכר</Gender>
+    <dob>2004--11-29</dob>
+    <age>15</age>
+  </adminUser>
+  <adminUser>
+    <username>Admin</username>
+    <password>Admin</password>
+    <firstName>אדמין</firstName>
+    <lastName>אדמין</lastName>
+    <email>admin@gmail.com</email>
+    <phone>0123456789</phone>
+    <address> los angeles 2</address>
+    <Gender>אחר</Gender>
+    <dob>2020-04-04</dob>
+    <age>0</age>
+  </adminUser>
+</admins>
