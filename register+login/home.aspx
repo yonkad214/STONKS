@@ -30,14 +30,4 @@
     <div class="homeHeader">
         <h1>אתר המשחקים לבידוד</h1>
     </div>
-    <div style="margin-top:1%">
-<pre class="contentHome">
-תעזרו לשטח את העקומה
-
-תשארו בבית ותשחקו במשחקים
-
-כדי להגן על כולנו
-</pre>
-        <img src="/assets/curve.jpg" alt="fllaten the curve">
-    </div>
 </asp:Content>
