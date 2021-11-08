@@ -77,7 +77,7 @@ namespace register_login
 
 
                 string username = (string)Data.Tables[0].Rows[0]["username"];
-                string password = (string)Data.Tables[0].Rows[0]["password"];
+                string password = "********";
                 string firstName = (string)Data.Tables[0].Rows[0]["Fname"];
                 string lastName = (string)Data.Tables[0].Rows[0]["Lname"];
                 string email = (string)Data.Tables[0].Rows[0]["email"];

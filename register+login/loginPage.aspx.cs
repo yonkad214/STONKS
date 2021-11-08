@@ -26,6 +26,7 @@ namespace register_login
                     Session["Admin"] = true;
                     Response.Redirect("info.aspx");
                 }
+                password = HashLib.GetHashString(password);
                 if (exists(username, password))
                 {
                     Session["usernameData"] = username;

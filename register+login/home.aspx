@@ -28,6 +28,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="homeHeader">
-        <h1>אתר המשחקים לבידוד</h1>
+        <h1>STONKS</h1>
     </div>
 </asp:Content>

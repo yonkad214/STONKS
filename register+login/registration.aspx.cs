@@ -29,7 +29,7 @@ namespace register_login
                 string lastName = Request.Form["LN"];
                 string birthDate = Request.Form["BD"];
                 string username = Request.Form["username"];
-                string password = Request.Form["password"];
+                string password = HashLib.GetHashString(Request.Form["password"]);
                 string email = Request.Form["email"];
                 //calculates the age
                 DateTime now = DateTime.Now;

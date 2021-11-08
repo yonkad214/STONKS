@@ -76,8 +76,10 @@
     <Content Include="home.aspx" />
     <Content Include="loginPage.aspx" />
     <Content Include="logOut.aspx" />
+    <Content Include="Metrics.txt" />
     <Content Include="ShowUsers.aspx" />
     <Content Include="StyleSheet1.css" />
+    <Content Include="updateMetrics.py" />
     <Content Include="Web.config" />
     <Content Include="registration.aspx" />
     <Content Include="Error.aspx" />
@@ -91,6 +93,7 @@
     <Compile Include="editInfo.aspx.designer.cs">
       <DependentUpon>editInfo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HashLib.cs" />
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
